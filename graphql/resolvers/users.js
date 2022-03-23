@@ -36,7 +36,7 @@ module.exports = {
         errors.general = "User not found";
         throw new UserInputError("User not found", { errors });
       }
-      user.password = await bcrypt.hash(password, 12); //buggy line
+
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         errors.general = "Wrong crendetials";
@@ -65,7 +65,7 @@ module.exports = {
       if (!valid) {
         throw new UserInputError("Errors", { errors });
       }
-      // Make sure user doesnt already exist
+      // TODO: Make sure user doesnt already exist
       const user = await User.findOne({ username });
       if (user) {
         throw new UserInputError("Username is taken", {
